@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GeeksChat"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
+            android:name=".Login.PhoneLogin"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"

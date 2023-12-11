@@ -1,8 +1,10 @@
-package com.prosper.geekschat;
+package com.prosper.geekschat.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.prosper.geekschat.R;
 
 public class PhoneLogin extends AppCompatActivity {
 
