@@ -97,7 +97,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/number_rounded_corner"
             android:elevation="5dp"
-            android:id="@+id/login_mobile_number"
+            android:id="@+id/login_username"
             />
     </LinearLayout>
 
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button_corner"
             android:text="Start Geeking"
-            android:id="@+id/send_otp_btn"/>
+            android:id="@+id/start_geeking_btn"/>
         <ProgressBar
             android:layout_width="32dp"
             android:layout_height="wrap_content"
