@@ -1,6 +1,7 @@
 package com.prosper.geekschat.utils;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -14,6 +15,9 @@ public class FirebaseUtil {
         return false;
     }
 
+    public static CollectionReference allUserCollectionReference(){
+        return FirebaseFirestore.getInstance().collection("users");
+    }
 
 
     //Method to retrieve the user if from firestore and return
