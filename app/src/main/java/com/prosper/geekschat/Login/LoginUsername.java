@@ -1,4 +1,4 @@
-package com.prosper.geekschat.Login;
+package com.prosper.geekschat.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
