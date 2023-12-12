@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "232022304156",
-    "project_id": "geekschat-af418",
-    "storage_bucket": "geekschat-af418.appspot.com"
+    "project_number": "103332777917",
+    "project_id": "geekschat-79965",
+    "storage_bucket": "geekschat-79965.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:232022304156:android:d2566388b6ddedc0dfd459",
+        "mobilesdk_app_id": "1:103332777917:android:53a7ace5f1723522e44cd4",
         "android_client_info": {
           "package_name": "com.prosper.geekschat"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCaqoJAmyTMhgM1IY2Aw4Dri4VpurrtVOQ"
+          "current_key": "AIzaSyDThP5orTFa_r3B4v19tc_9nqET27N7C6c"
         }
       ],
       "services": {
