@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.prosper.geekschat.Login.PhoneLogin;
+import com.prosper.geekschat.login.PhoneLogin;
 
 public class SplashScreen extends AppCompatActivity {
 
