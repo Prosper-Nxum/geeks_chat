@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.prosper.geekschat.login.PhoneLogin;
+import com.prosper.geekschat.utils.FirebaseUtil;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -19,11 +20,15 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, PhoneLogin.class);
-                startActivity(intent);
+
+                if(FirebaseUtil.isLoggedIn()){
+                    startActivity(new Intent(SplashScreen.this,MainActivity.class));
+                }else{
+                    startActivity(new Intent(SplashScreen.this,PhoneLogin.class));
+                }
                 finish();
             }
-        },2000);
+        },1000);
 
     }
 }
