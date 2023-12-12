@@ -3,13 +3,18 @@ package com.prosper.geekschat.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
@@ -50,6 +55,15 @@ public class LoginOTP extends AppCompatActivity {
 
         //Sending the OTP
         sendOTP(phoneNumber, false);
+
+        //Move onto the next
+        nextBtn.setOnClickListener(v ->
+        {
+            String otp = otpInput.getText().toString();
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
+            signIn(credential);
+            setInProgress(true);
+        });
 
 
     }
@@ -97,10 +111,26 @@ public class LoginOTP extends AppCompatActivity {
 
 
     }
+
     //Function to sign in the user with the OTP received and move to the next activity
     private void signIn(PhoneAuthCredential phoneAuthCredential)
     {
-
+        setInProgress(true);
+        auth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful())
+                {
+                    Intent intent = new Intent(LoginOTP.this, LoginUsername.class);
+                    intent.putExtra("phone", phoneNumber);
+                    startActivity(intent);
+                }
+                else
+                {
+                    AndroidUtil.showToast(getApplicationContext(), "OTP verification failed");
+                }
+            }
+        });
     }
 
     void setInProgress(boolean inProgress)
