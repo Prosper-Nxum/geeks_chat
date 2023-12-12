@@ -22,6 +22,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.prosper.geekschat.R;
 import com.prosper.geekschat.utils.AndroidUtil;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class LoginOTP extends AppCompatActivity {
@@ -65,12 +67,15 @@ public class LoginOTP extends AppCompatActivity {
             setInProgress(true);
         });
 
+        resendOtpTextView.setOnClickListener(v -> sendOTP(phoneNumber, true));
+
 
     }
 
     //Function to send the OTP, progress, verifier, callbacks
     void sendOTP(String phoneNumber, boolean isResend)
     {
+        startResendTimer();
         setInProgress(true);
         PhoneAuthOptions.Builder builder =
         PhoneAuthOptions.newBuilder(auth).setPhoneNumber(phoneNumber)
@@ -112,23 +117,46 @@ public class LoginOTP extends AppCompatActivity {
 
     }
 
+    //This is a function that will be used on resending the otp with a timeout
+    private void startResendTimer()
+    {
+        resendOtpTextView.setEnabled(false);
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run()
+            {
+                timeout--;
+                resendOtpTextView.setText("OTP Resent in " + timeout + " seconds");
+                if(timeout <= 0)
+                {
+                  timeout = 60L;
+                  timer.cancel();
+                  runOnUiThread(new Runnable() {
+                      @Override
+                      public void run() {
+                          resendOtpTextView.setEnabled(true);
+                      }
+                  });
+                }
+            }
+        }, 0 , 1000);
+    }
+
     //Function to sign in the user with the OTP received and move to the next activity
     private void signIn(PhoneAuthCredential phoneAuthCredential)
     {
         setInProgress(true);
-        auth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful())
-                {
-                    Intent intent = new Intent(LoginOTP.this, LoginUsername.class);
-                    intent.putExtra("phone", phoneNumber);
-                    startActivity(intent);
-                }
-                else
-                {
-                    AndroidUtil.showToast(getApplicationContext(), "OTP verification failed");
-                }
+        auth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(task -> {
+            if (task.isSuccessful())
+            {
+                Intent intent = new Intent(LoginOTP.this, LoginUsername.class);
+                intent.putExtra("phone", phoneNumber);
+                startActivity(intent);
+            }
+            else
+            {
+                AndroidUtil.showToast(getApplicationContext(), "OTP verification failed");
             }
         });
     }
